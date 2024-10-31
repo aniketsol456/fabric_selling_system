@@ -5,6 +5,7 @@ import './Navbar.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShoppingCart, faUser, faBars } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
+import Avatar from '@mui/material/Avatar';
 
 const Navbar = () => {
   const navigate = useNavigate(); // Initialize navigate function
@@ -45,7 +46,8 @@ const Navbar = () => {
         <img src={Search_logo} alt="Search" />
       </div>
       <div className="profile">
-        <FontAwesomeIcon icon={faUser} onClick={openProfile} className='ProfileIcon' />
+        <Avatar onClick={openProfile} style={{background : "white", color :"black"}}>A</Avatar>
+        {/* <FontAwesomeIcon icon={faUser} onClick={openProfile} className='ProfileIcon' /> */}
       </div>
       <div className="barIcon" onClick={toggleMenu}>
         <FontAwesomeIcon icon={faBars} />
