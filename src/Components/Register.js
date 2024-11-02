@@ -24,36 +24,49 @@ const Register = () => {
     })
   }
 
-  const addUserdata = (e) => {
+  const addUserdata = async (e) => {
     e.preventDefault();
 
-    const {fname, email, password, cpassword} = inpval;
-    if(fname === ""){
+    const { fname, email, password, cpassword } = inpval;
+    if (fname === "") {
       alert("Please Enter Your Name");
     }
-    else if(email ===""){
+    else if (email === "") {
       alert("Please Enter Your Email");
     }
-    else if(!email.includes("@")){
+    else if (!email.includes("@")) {
       alert("Enter a valid Email");
     }
-    else if(password === ""){
+    else if (password === "") {
       alert("Enter a Password");
     }
-    else if(password.length<6){
+    else if (password.length < 6) {
       alert("Password must be 6 char")
     }
-    else if(cpassword === ""){
+    else if (cpassword === "") {
       alert("Enter a Confirm password");
     }
-    else if(cpassword.length<6){
+    else if (cpassword.length < 6) {
       alert("Confirm Password must be 6 char")
     }
-    else if(password!==cpassword){
+    else if (password !== cpassword) {
       alert("Password and Confirm Password must be same")
     }
-    else{
-      console.log("User registration sucessfully");
+    else {
+      // console.log("User registration sucessfully");
+
+      const data = await fetch("/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          fname, email, password, cpassword
+        })
+      });
+
+      const res = await data.json();
+      console.log(res);
     }
   }
 
