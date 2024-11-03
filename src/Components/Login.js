@@ -20,7 +20,7 @@ const Login = () => {
     })
   }
 
-  const loginUser =(e)=>{
+  const loginUser = async(e)=>{
     e.preventDefault();
 
     const {email, password} = inpval;
@@ -38,11 +38,26 @@ const Login = () => {
       alert("Password must be 6 char")
     }
     else{
-      console.log("User Login sucessfully");
+      // console.log("User Login sucessfully");
+      const data = await fetch("/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          email, password
+        })
+      });
+
+      const res = await data.json();
+      // console.log(res);
+      if (res.status === 201) {
+        localStorage.setItem("usersdatatoken",res.result.token)
+        setinpval({ ...inpval,email: "", password: ""})
+      }
     }
 
   }
-
 
   return (
     <>
