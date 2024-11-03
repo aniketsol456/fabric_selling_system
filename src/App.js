@@ -5,6 +5,7 @@ import Login from './Components/Login';
 import Register from './Components/Register';
 import Home from './Components/Home';
 import Footer from './Components/Footer';
+import Profile from './Components/Profile';
 
 const App = () => {
   return (
@@ -16,8 +17,9 @@ const App = () => {
           <Route exact path='/' element = {<Home/>}/>
           <Route exact path='/login' element = {<Login/>}/>
           <Route exact path='/register' element = {<Register/>}/>
+          <Route exact path='/profile' element = {<Profile/>}/>
         </Routes>
-        <Footer/>
+        
       </div>
       </>
     </BrowserRouter>
