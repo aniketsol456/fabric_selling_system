@@ -3,6 +3,7 @@ import HomeBack from '../assets/Images/home_bg.jpg';
 import heart from '../assets/Images/heart.png';
 import shield from '../assets/Images/shield.jpeg';
 import trust from '../assets/Images/trust.png';
+import Footer from './Footer';
 import './Home.css';
 
 const Home = () => {
@@ -30,7 +31,9 @@ const Home = () => {
                     <button className='cta-button'>Get Started</button>
                 </div>
             </div>
+            <Footer/>
         </div>
+        
     );
 };
 
