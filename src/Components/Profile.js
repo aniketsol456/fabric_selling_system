@@ -1,12 +1,14 @@
 import React from 'react';
 import User from '../assets/Images/user.jpg';
+import './Profile.css';
 
 const Profile = () => {
     return (
         <>
-            <div style={{display:"flex",flexDirection:"column",alignItems:"center"}}>
-                <img src= {User} style={{width : "200px",marginTop: 20}} alt=''/>
-                <h1>User Email : Aniket@gmail.com</h1>
+            <div className='Info'>
+                <img src= {User} alt=''/>
+                <h1>Name : Aniket</h1><br/><br/>
+                <h1>User Email :    Aniket@gmail.com</h1>
             </div>
         </>
     )
