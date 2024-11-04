@@ -1,0 +1,13 @@
+.Info{
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+}
+.Info img {
+    width : "200px";
+    marginTop: 20;
+    background-color: chocolate;
+    border-radius: 50px;
+    border: 1px;
+    border-color: black;
+}
