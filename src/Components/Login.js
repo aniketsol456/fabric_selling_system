@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
 import './Login_Register.css';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 const Login = () => {
+
+  const history = useNavigate();
 
   const [passShow,setpassShow] = useState(false);
   const [inpval, setinpval] = useState({
@@ -52,6 +54,7 @@ const Login = () => {
       const res = await data.json();
       // console.log(res);
       if (res.status === 201) {
+        history("/profile");
         localStorage.setItem("usersdatatoken",res.result.token)
         setinpval({ ...inpval,email: "", password: ""})
       }
