@@ -6,7 +6,7 @@ import Register from './Components/Register';
 import Home from './Components/Home';
 import Footer from './Components/Footer';
 import Profile from './Components/Profile';
-
+import Error from './Components/Error';
 const App = () => {
   return (
     <BrowserRouter>
@@ -18,6 +18,7 @@ const App = () => {
           <Route exact path='/login' element = {<Login/>}/>
           <Route exact path='/register' element = {<Register/>}/>
           <Route exact path='/profile' element = {<Profile/>}/>
+          <Route exact path='*' element = {<Error/>}/>
         </Routes>
         
       </div>
