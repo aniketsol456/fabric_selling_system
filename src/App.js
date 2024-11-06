@@ -7,6 +7,7 @@ import Home from './Components/Home';
 import Footer from './Components/Footer';
 import Profile from './Components/Profile';
 import Error from './Components/Error';
+import FabricCatalog from './Components/Fabric_catalog';
 const App = () => {
   return (
     <BrowserRouter>
@@ -16,6 +17,7 @@ const App = () => {
         <Routes>
           <Route exact path='/' element = {<Home/>}/>
           <Route exact path='/login' element = {<Login/>}/>
+          <Route exact path='/fabric' element = {<FabricCatalog/>}/>
           <Route exact path='/register' element = {<Register/>}/>
           <Route exact path='/profile' element = {<Profile/>}/>
           <Route exact path='*' element = {<Error/>}/>

@@ -1,85 +1,117 @@
+/* Footer */
 .footer {
-    background-color: #333;
-    color: white;
-    padding: 2rem;
+  background-color: #f8f8f8; /* Light gray background */
+  padding: 40px 20px;
+  color: #333;
+  font-family: Arial, sans-serif;
+}
+
+.footer-top {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.footer-top h2 {
+  font-size: 1.5em;
+  color: #333;
+}
+
+.subscribe input {
+  padding: 10px;
+  margin-right: 10px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  width: 250px;
+}
+
+.subscribe button {
+  padding: 10px 20px;
+  background-color: #b22222;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.footer-main {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.footer-section {
+  width: 22%;
+  padding: 10px;
+}
+
+.footer-section h4 {
+  font-size: 1.1em;
+  color: #b22222;
+}
+
+.footer-section p {
+  margin: 8px 0;
+  color: #555;
+}
+
+.footer-section .social-icons {
+  margin-top: 10px;
+}
+
+.footer-section .social-icons i {
+  margin-right: 10px;
+  color: #333;
+}
+
+.footer-bottom {
+  margin-top: 30px;
+  border-top: 1px solid #ddd;
+  padding-top: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer-bottom p {
+  display: flex;
+  color: #777;
+  justify-content: center;
+  align-items: center;
+  width: 100%; /* Ensure it takes the full width */
+  text-align: center; /* Centers the text content */
+}
+
+.payment-methods i {
+  margin-right: 10px;
+  color: #333;
+  font-size: 1.2em;
+}
+
+.payment-methods i:hover {
+  color: #b22222;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .footer-main {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .footer-section {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .payment-methods {
+    margin-top: 20px;
     text-align: center;
   }
-  
-  .footer-top {
-    background-color: #222;
-    padding: 1rem;
-  }
-  
-  .footer-top h2 {
-    margin: 0;
-    font-size: 1.5rem;
-  }
-  
-  .subscribe {
-    display: flex;
-    margin: 1rem auto;
-    max-width: 500px;
-    align-items: center;
-  }
-  
-  .subscribe input {
-    padding: 0.5rem;
-    flex: 1;
-    border: none;
-    outline: none;
-  }
-  
-  .subscribe button {
-    padding: 0.5rem 1rem;
-    background-color: #c0392b;
-    color: white;
-    border: none;
-    cursor: pointer;
-  }
-  
-  .footer-main {
-    display: flex;
-    justify-content: space-around;
-    padding: 1rem 0;
-    flex-wrap: wrap;
-  }
-  
-  .footer-section {
-    flex: 1;
-    min-width: 150px;
-    margin: 0.5rem;
-  }
-  
-  .footer-section h4 {
-    font-size: 1rem;
-    margin-bottom: 0.5rem;
-  }
-  
+
   .footer-bottom {
-    display: flex;
-    justify-content: space-between;
+    flex-direction: column;
     align-items: center;
-    padding: 1rem 0;
-    border-top: 1px solid #555;
-    flex-wrap: wrap;
   }
-  
-  .payment-methods i {
-    margin: 0 0.5rem;
-  }
-  
-  .social-icons i {
-    margin: 0 0.5rem;
-  }
-  
-  @media (max-width: 768px) {
-    .footer-main {
-      flex-direction: column;
-      text-align: left;
-    }
-    
-    .footer-bottom {
-      flex-direction: column;
-    }
-  }
-  
+}
