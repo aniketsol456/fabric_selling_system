@@ -2,7 +2,7 @@
   "name": "fabric_selling_system",
   "version": "0.1.0",
   "private": true,
-  "proxy" : "http://localhost:8009",
+  "proxy": "http://localhost:8009",
   "dependencies": {
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
