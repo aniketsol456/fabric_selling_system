@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import HomeBack from '../assets/Images/home_bg.jpg';
 import heart from '../assets/Images/heart.png';
 import shield from '../assets/Images/shield.jpeg';
@@ -7,6 +7,7 @@ import Footer from './Footer';
 import './Home.css';
 
 const Home = () => {
+
     return (
         <div className='home-container'>
             <div className='header-info'>
@@ -31,9 +32,9 @@ const Home = () => {
                     <button className='cta-button'>Get Started</button>
                 </div>
             </div>
-            <Footer/>
+            <Footer />
         </div>
-        
+
     );
 };
 
