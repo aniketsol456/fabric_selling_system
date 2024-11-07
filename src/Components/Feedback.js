@@ -20,13 +20,13 @@ const Feedback = () => {
 
   return (
     <section>
-      <div className='feedback_data'>
-        <div className='feedback_heading'>
+      <div className='feedback-container'>
+        <div className='feedback-header'>
           <h1>We Value Your Feedback</h1>
           <p>Please provide your feedback below.</p>
         </div>
-        <form onSubmit={submitFeedback}>
-          <div className='form_input'>
+        <form onSubmit={submitFeedback} className='feedback-form'>
+          <div className='feedback-input'>
             <label htmlFor='email'>Email</label>
             <input
               type='email'
@@ -37,7 +37,7 @@ const Feedback = () => {
               placeholder='Enter your email address'
             />
           </div>
-          <div className='form_input'>
+          <div className='feedback-input'>
             <label htmlFor='rating'>Rating</label>
             <input
               type='number'
@@ -50,7 +50,7 @@ const Feedback = () => {
               max='5'
             />
           </div>
-          <div className='form_input'>
+          <div className='feedback-input'>
             <label htmlFor='description'>Description</label>
             <textarea
               name='description'
@@ -60,7 +60,7 @@ const Feedback = () => {
               placeholder='Write your feedback here'
             ></textarea>
           </div>
-          <button type='submit' className='btn'>Submit Feedback</button>
+          <button type='submit' className='feedback-submit-btn'>Submit Feedback</button>
         </form>
       </div>
     </section>
