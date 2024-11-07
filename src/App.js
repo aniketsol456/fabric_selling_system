@@ -8,6 +8,7 @@ import Footer from './Components/Footer';
 import Profile from './Components/Profile';
 import Error from './Components/Error';
 import FabricCatalog from './Components/Fabric_catalog';
+import Feedback from './Components/Feedback';
 const App = () => {
   return (
     <BrowserRouter>
@@ -18,6 +19,7 @@ const App = () => {
           <Route exact path='/' element = {<Home/>}/>
           <Route exact path='/login' element = {<Login/>}/>
           <Route exact path='/fabric' element = {<FabricCatalog/>}/>
+          <Route exact path='/feedback' element = {<Feedback/>}/>
           <Route exact path='/register' element = {<Register/>}/>
           <Route exact path='/profile' element = {<Profile/>}/>
           <Route exact path='*' element = {<Error/>}/>
