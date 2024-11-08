@@ -6,6 +6,9 @@ import trust from '../assets/Images/trust.png';
 import linenImage from '../assets/Images/fabric3.webp';
 import linenCottonImage from '../assets/Images/fabric1.webp';
 import cottonImage from '../assets/Images/fabric2.webp';
+import freeShipping from '../assets/Images/benefit-1.svg';
+import easyReturns from '../assets/Images/benefit-2.svg';
+import safeCheckout from '../assets/Images/benefit-3.svg';
 import Footer from './Footer';
 import './Home.css';
 import { useNavigate } from 'react-router-dom';
@@ -64,6 +67,24 @@ const Home = () => {
                     </div>
                 </div>
             </div>
+
+            <div className='benefits-section'>
+                <div className='benefit-item'>
+                    <img src={freeShipping} alt="Free Shipping Icon" className="icon" />
+                    <h4>Free Shipping On Orders Over $150</h4>
+                </div>
+                <div className='benefit-item'>
+                    <img src={easyReturns} alt="Easy Returns Icon" className="icon" />
+                    <h4>Easy Returns 30 Day Return Guarantee</h4>
+                </div>
+                <div className='benefit-item'>
+                    <img src={safeCheckout} alt="Safe Checkout Icon" className="icon" />
+                    <h4>Guaranteed Safe Checkout</h4>
+                </div>
+            </div>
+            <br/>
+            <br/>
+            <br/>
 
             <Footer />
         </div>
