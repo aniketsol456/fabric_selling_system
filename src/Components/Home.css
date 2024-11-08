@@ -171,6 +171,30 @@
 }
 
 
+/* Benefits Section Styling */
+.benefits-section {
+    display: flex;
+    justify-content: space-around;
+    margin: 20px 0;
+    width: 100%;
+    /* max-width: 1200px; */
+    background-color: #fff;
+}
+
+.benefit-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    max-width: 200px;
+}
+
+.benefit-item .icon {
+    width: 50px;
+    height: auto;
+    margin-bottom: 10px;
+}
+
 
 /* Responsive Styling */
 @media (max-width: 768px) {
@@ -209,5 +233,11 @@
 
     .fabric-button {
         font-size: 14px;
+    }
+
+    .benefits-section {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
     }
 }
