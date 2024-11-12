@@ -8,6 +8,9 @@ const Order = () => {
         <span>0 orders placed in</span>
         <select>
           <option>All Time</option>
+          <option>1 month ago</option>
+          <option>2 month ago</option>
+          <option>3 month ago</option>
           {/* Add more time filter options if needed */}
         </select>
       </div>
