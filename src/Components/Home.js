@@ -55,15 +55,15 @@ const Home = () => {
                 <div className='fabric-collection-grid'>
                     <div className='fabric-collection-item fabric-collection-item-large'>
                         <img src={linenImage} alt="Linen" className="collection-image" />
-                        <button className='fabric-button'>LINEN</button>
+                        <button className='fabric-button' onClick={goFabricCatalog}>LINEN</button>
                     </div>
                     <div className='fabric-collection-item'>
                         <img src={linenCottonImage} alt="Linen/Cotton" className="collection-image" />
-                        <button className='fabric-button'>LINEN/COTTON</button>
+                        <button className='fabric-button' onClick={goFabricCatalog}>LINEN/COTTON</button>
                     </div>
                     <div className='fabric-collection-item'>
                         <img src={cottonImage} alt="Cotton" className="collection-image" />
-                        <button className='fabric-button'>COTTON</button>
+                        <button className='fabric-button' onClick={goFabricCatalog}>COTTON</button>
                     </div>
                 </div>
             </div>
