@@ -1,7 +1,7 @@
 import React from 'react';
 import './Fabric_catalog.css';
 import Linen1 from '../assets/Images/linen2.jpg';
-import Linen2 from '../assets/Images/linen2.jpg';
+import Linen2 from '../assets/Images/linen5.jpg';
 import cotton1 from '../assets/Images/cotton1.jpg';
 
 // Example data with prices in USD
@@ -21,6 +21,12 @@ const convertToINR = (usd) => {
 };
 
 const FabricCatalog = () => {
+  // Handle Add to Cart logic
+  const handleAddToCart = (fabric) => {
+    alert(`${fabric.name} added to cart!`);
+    // Implement your cart logic here, e.g., save to localStorage or update state
+  };
+
   return (
     <div className="catalog-container">
       <h2 className="catalog-title">Cotton, Linen Fabric</h2>
@@ -36,6 +42,13 @@ const FabricCatalog = () => {
                 <span className="original-price">₹{convertToINR(fabric.originalPriceUSD)}</span>
                 <span className="discount-badge">-{fabric.discount}%</span>
               </div>
+              {/* Add to Cart Button */}
+              <button
+                className="add-to-cart-button"
+                onClick={() => handleAddToCart(fabric)}
+              >
+                Add to Cart
+              </button>
             </div>
           </div>
         ))}
