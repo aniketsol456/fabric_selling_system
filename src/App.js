@@ -1,6 +1,6 @@
 import React from 'react';
 import Navbar from './Components/Navbar';
-import {BrowserRouter,Routes,Route} from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Login from './Components/Login';
 import Register from './Components/Register';
 import Home from './Components/Home';
@@ -12,27 +12,33 @@ import Feedback from './Components/Feedback';
 import Help_Center from './Components/Help_Center';
 import Order from './Components/Order';
 import Cart from './Components/Cart';
+import Sidebar from './Components/Admin/Sidebar';
+import FabricManagement from './Components/Admin/Fabric_Management';
+import SupplierManagement from './Components/Admin/Supplier_Management';
+import UserManagement from './Components/Admin/User_Management';
+import AdminDashboard from './Components/Admin/Admin_Dashboard';
+import OrderManagement from './Components/Admin/Fabric_Management';
 
 const App = () => {
   return (
     <BrowserRouter>
       <>
-      <div className='Container'>
-        <Navbar/>
-        <Routes>
-          <Route exact path='/' element = {<Home/>}/>
-          <Route exact path='/login' element = {<Login/>}/>
-          <Route exact path='/fabric' element = {<FabricCatalog/>}/>
-          <Route exact path='/feedback' element = {<Feedback/>}/>
-          <Route exact path='/order' element = {<Order/>}/>
-          <Route exact path='/cart' element = {<Cart/>}/>
-          <Route exact path='/helpcenter' element = {<Help_Center/>}/>
-          <Route exact path='/register' element = {<Register/>}/>
-          <Route exact path='/profile' element = {<Profile/>}/>
-          <Route exact path='*' element = {<Error/>}/>
-        </Routes>
-        
-      </div>
+        <div className='Container'>
+          <Navbar />
+          <Routes>
+            <Route exact path='/' element={<Home />} />
+            <Route exact path='/login' element={<Login />} />
+            <Route exact path='/fabric' element={<FabricCatalog />} />
+            <Route exact path='/feedback' element={<Feedback />} />
+            <Route exact path='/order' element={<Order />} />
+            <Route exact path='/cart' element={<Cart />} />
+            <Route exact path='/helpcenter' element={<Help_Center />} />
+            <Route exact path='/register' element={<Register />} />
+            <Route exact path='/profile' element={<Profile />} />
+            <Route exact path='*' element={<Error />} />
+          </Routes>
+
+        </div>
       </>
     </BrowserRouter>
   )
