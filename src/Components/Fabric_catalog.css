@@ -74,6 +74,37 @@
     font-size: 0.8em;
   }
   
+  .add-to-cart-button {
+    margin-top: 10px;
+    padding: 10px 15px;
+    background-color: #960e0e; /* Green background */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+  }
+  
+  .add-to-cart-button:hover {
+    background-color: #45a049; /* Darker green on hover */
+  }
+  
+  .fabric-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  
+  .fabric-card .fabric-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 10px;
+  }
+
   /* Responsive Adjustments */
   @media (max-width: 768px) {
     .fabric-info {
