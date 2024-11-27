@@ -1,0 +1,43 @@
+/* General Layout */
+.management-container {
+    padding: 20px;
+    background-color: #ffffff;
+    min-height: 100vh;
+  }
+  
+  .management-title {
+    font-size: 2rem;
+    color: #960e0e;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  /* Table Styles */
+  .management-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #ffffff;
+  }
+  
+  .management-table th,
+  .management-table td {
+    padding: 10px 15px;
+    text-align: left;
+    border: 1px solid #960e0e;
+  }
+  
+  .management-table th {
+    background-color: #960e0e;
+    color: #ffffff;
+  }
+  
+  .management-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  .management-table tr:hover {
+    background-color: #eee;
+    cursor: pointer;
+  }
+  
