@@ -12,12 +12,6 @@ import Feedback from './Components/Feedback';
 import Help_Center from './Components/Help_Center';
 import Order from './Components/Order';
 import Cart from './Components/Cart';
-import Sidebar from './Components/Admin/Sidebar';
-import FabricManagement from './Components/Admin/Fabric_Management';
-import SupplierManagement from './Components/Admin/Supplier_Management';
-import UserManagement from './Components/Admin/User_Management';
-import AdminDashboard from './Components/Admin/Admin_Dashboard';
-import OrderManagement from './Components/Admin/Fabric_Management';
 
 const App = () => {
   return (
