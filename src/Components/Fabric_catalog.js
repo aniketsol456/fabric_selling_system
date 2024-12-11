@@ -1,21 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Fabric_catalog.css';
-import Linen1 from '../assets/Images/linen2.jpg';
-import Linen2 from '../assets/Images/linen5.jpg';
-import cotton1 from '../assets/Images/cotton1.jpg';
-import cotton2 from '../assets/Images/cotton2.jpg';
-import cotton3 from '../assets/Images/cotton3.jpg';
-// import cotton4 from '../assets/Images/cotton4.jpg';
-
-// Example data with prices in USD
-const fabricData = [
-  { id: 1, image: Linen1, name: 'Beet Red Linen', priceUSD: 16.89, discount: 10, originalPriceUSD: 18.77, color: 'Red', type: 'Linen', weight: 'Lightweight', content: '100% Linen', width: '54 inches', design: 'Plain', onSale: true },
-  { id: 2, image: Linen2, name: 'Crystal Rose Linen', priceUSD: 16.89, discount: 10, originalPriceUSD: 18.77, color: 'Pink', type: 'Linen', weight: 'Lightweight', content: '100% Linen', width: '54 inches', design: 'Floral', onSale: false },
-  { id: 3, image: cotton1, name: 'Fiery Red Linen', priceUSD: 16.89, discount: 10, originalPriceUSD: 18.77, color: 'Red', type: 'Cotton', weight: 'Mediumweight', content: 'Cotton Blend', width: '44 inches', design: 'Printed', onSale: true },
-  { id: 4, image: cotton2, name: 'Ambor Linen', priceUSD: 16.89, discount: 10, originalPriceUSD: 18.77, color: 'blue', type: 'Cotton', weight: 'Mediumweight', content: 'Cotton Blend', width: '54 inches', design: 'Printed', onSale: true },
-  { id: 5, image: cotton3, name: 'Gazi Cotton', priceUSD: 16.89, discount: 10, originalPriceUSD: 18.77, color: 'Red', type: 'Cotton', weight: 'Mediumweight', content: 'Cotton Blend', width: '54 inches', design: 'Printed', onSale: true },
-  // Add more items as needed
-];
+import axios from 'axios';
 
 // Conversion rate
 const USD_TO_INR = 83;
@@ -26,6 +11,7 @@ const convertToINR = (usd) => {
 };
 
 const FabricCatalog = () => {
+  const [fabricList, setFabricList] = useState([]); // State to store fabric data
   const [filters, setFilters] = useState({
     color: '',
     type: '',
@@ -36,6 +22,22 @@ const FabricCatalog = () => {
     onSale: false,
   });
 
+  useEffect(() => {
+    // Fetch fabric data from the API
+    const fetchFabrics = async () => {
+      try {
+        const response = await axios.get('http://your-backend-url/fabric/all', {
+          // You may need to add headers, including authorization if needed
+        });
+        setFabricList(response.data.fabrics); // Assuming the response contains a 'fabrics' field
+      } catch (error) {
+        console.error('Error fetching fabric data:', error);
+      }
+    };
+
+    fetchFabrics(); // Call the function to fetch fabric data
+  }, []); // Empty dependency array means it runs once when the component mounts
+
   // Handle filter changes
   const handleFilterChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -45,8 +47,16 @@ const FabricCatalog = () => {
     }));
   };
 
-  // Filter fabric data
-  const filteredData = fabricData.filter((fabric) => {
+  // Filter fabric data - Apply filters if they are set, otherwise show all fabrics
+  const filteredData = fabricList.filter((fabric) => {
+    // If no filters are set, return all fabrics
+    const noFiltersSet = Object.values(filters).every((val) => val === '' || val === false);
+    
+    if (noFiltersSet) {
+      return true; // Return all fabrics when no filters are set
+    }
+
+    // Apply the filters to the fabric data
     return (
       (!filters.color || fabric.color === filters.color) &&
       (!filters.type || fabric.type === filters.type) &&

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './Login_Register.css';
 import { NavLink } from 'react-router-dom';
+import axios from 'axios';
 
 const Register = () => {
 
@@ -55,21 +56,20 @@ const Register = () => {
     else {
       // console.log("User registration sucessfully");
 
-      const data = await fetch("/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          fname, email, password, cpassword
-        })
-      });
-
-      const res = await data.json();
-      // console.log(res);
-      if (res.status === 201) {
-        alert("User Registration Done");
-        setinpval({ ...inpval, fname: "", email: "", password: "", cpassword: "" })
+      try {
+        const res = await axios.post("/register", {
+          fname,
+          email,
+          password,
+          cpassword
+        });
+      
+        if (res.status === 201) {
+          alert("User Registration Done");
+          setinpval({ ...inpval, fname: "", email: "", password: "", cpassword: "" });
+        }
+      } catch (error) {
+        console.error(error.response?.data || error.message);
       }
     }
   }

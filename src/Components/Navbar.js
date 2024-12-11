@@ -8,20 +8,30 @@ import { useNavigate } from 'react-router-dom';
 import Avatar from '@mui/material/Avatar';
 
 const Navbar = () => {
-  const navigate = useNavigate(); // Initialize navigate function
+  const navigate = useNavigate();
   const [navClassName, setNavClassName] = useState('navClassName');
 
   const toggleMenu = () => {
     setNavClassName(navClassName === 'navClassName' ? 'navClassName responsive' : 'navClassName');
   };
 
-  const openCartPage = () => { // Function to handle navigation to the Cart page
-    navigate('/cart'); // Use navigate to change route
+  const openCartPage = () => {
+    navigate('/cart');
   };
 
   const openProfile = () => {
     navigate('/profile');
   };
+
+  const handleLogout = () => {
+    // Clear the token from localStorage or cookie
+    localStorage.removeItem('usersdatatoken');
+    // Redirect to the home page or login page
+    navigate('/login');
+  };
+
+  // Check if user is logged in by checking for the token
+  const isLoggedIn = localStorage.getItem('usersdatatoken');
 
   return (
     <div className='Navbar'>
@@ -35,7 +45,12 @@ const Navbar = () => {
           <a href='/helpcenter'>Contact Us/Help</a>
           <a href='/feedback'>Feedback/Review</a>
           <a href='/order'>Orders</a>
-          <a href='/login'>Login/Signup</a>
+          {/* Conditional Rendering for Login/Logout */}
+          {isLoggedIn ? (
+            <a href='#' onClick={handleLogout}>Logout</a> // Show Logout if user is logged in
+          ) : (
+            <a href='/login'>Login/Signup</a> // Show Login if user is not logged in
+          )}
         </ul>
       </div>
       <div className="cart">
@@ -46,8 +61,11 @@ const Navbar = () => {
         <img src={Search_logo} alt="Search" />
       </div>
       <div className="profile">
-        <Avatar onClick={openProfile} style={{background : "white", color :"black"}}>A</Avatar>
-        {/* <FontAwesomeIcon icon={faUser} onClick={openProfile} className='ProfileIcon' /> */}
+        {isLoggedIn ? (
+          <Avatar onClick={openProfile} style={{ background: "white", color: "black" }}>A</Avatar>
+        ) : (
+          <FontAwesomeIcon icon={faUser} onClick={openProfile} className='ProfileIcon' />
+        )}
       </div>
       <div className="barIcon" onClick={toggleMenu}>
         <FontAwesomeIcon icon={faBars} />
