@@ -23,42 +23,38 @@ const Login = () => {
     })
   }
 
-  const loginUser = async(e)=>{
+  const loginUser = async (e) => {
     e.preventDefault();
-
-    const {email, password} = inpval;
-
-    if(email ===""){
+  
+    const { email, password } = inpval;
+  
+    if (email === "") {
       alert("Please Enter Your Email");
-    }
-    else if(!email.includes("@")){
+    } else if (!email.includes("@")) {
       alert("Enter a valid Email");
-    }
-    else if(password === ""){
+    } else if (password === "") {
       alert("Enter a Password");
-    }
-    else if(password.length<6){
-      alert("Password must be 6 char")
-    }
-    else{
-      // console.log("User Login sucessfully");
+    } else if (password.length < 6) {
+      alert("Password must be 6 char");
+    } else {
       try {
         const res = await axios.post("/login", {
           email,
-          password
+          password,
         });
-      
+  
         if (res.status === 201) {
-          history("/profile");
-          localStorage.setItem("usersdatatoken", res.data.result.token);
-          setinpval({ ...inpval, email: "", password: "" });
+            document.cookie = `usercookie=${res.data.result.token}; path=/; expires=${new Date(Date.now() + 9000000).toUTCString()}`;
+            document.cookie = `userid=${res.data.result.userValid.id}; path=/; expires=${new Date(Date.now() + 9000000).toUTCString()}`;
+            history("/profile");
+            setinpval({ email: "", password: "" });
         }
       } catch (error) {
         console.error(error.response?.data || error.message);
       }
     }
-
-  }
+  };
+  
 
   return (
     <>

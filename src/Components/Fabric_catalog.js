@@ -1,17 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import './Fabric_catalog.css';
 import axios from 'axios';
-
-// Conversion rate
-const USD_TO_INR = 83;
-
-// Function to convert USD to INR
-const convertToINR = (usd) => {
-  return (usd * USD_TO_INR).toFixed(2); // Convert and format to 2 decimal places
-};
+import { useNavigate } from 'react-router-dom';
 
 const FabricCatalog = () => {
-  const [fabricList, setFabricList] = useState([]); // State to store fabric data
+  const navigate = useNavigate();
+  const [fabricList, setFabricList] = useState([]);
+  const [cart, setCart] = useState([]);
+  const [userId, setUserId] = useState('');;
   const [filters, setFilters] = useState({
     color: '',
     type: '',
@@ -22,41 +18,134 @@ const FabricCatalog = () => {
     onSale: false,
   });
 
-  useEffect(() => {
-    // Fetch fabric data from the API
-    const fetchFabrics = async () => {
-      try {
-        const response = await axios.get('http://your-backend-url/fabric/all', {
-          // You may need to add headers, including authorization if needed
-        });
-        setFabricList(response.data.fabrics); // Assuming the response contains a 'fabrics' field
-      } catch (error) {
-        console.error('Error fetching fabric data:', error);
-      }
-    };
-
-    fetchFabrics(); // Call the function to fetch fabric data
-  }, []); // Empty dependency array means it runs once when the component mounts
-
-  // Handle filter changes
-  const handleFilterChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    setFilters((prevFilters) => ({
-      ...prevFilters,
-      [name]: type === 'checkbox' ? checked : value,
-    }));
+  const getCookie = (name) => {
+    const matches = document.cookie.match(new RegExp(`(?:^|; )${name.replace(/([.$?*|{}()[]\/+^])/g, '\\$1')}=([^;]*)`));
+    return matches ? decodeURIComponent(matches[1]) : undefined;
   };
 
-  // Filter fabric data - Apply filters if they are set, otherwise show all fabrics
+  const fetchFabrics = async () => {
+    const token = getCookie('usercookie');
+    try {
+      const response = await axios.get('http://localhost:8009/fabric/all', {
+        headers: {
+          "Authorization": `Bearer ${token}`,
+        },
+      });
+      if (response.status === 200) {
+        setFabricList(response.data.fabrics);
+      }
+    } catch (error) {
+      console.error('Error fetching fabric data:', error);
+    }
+  };
+
+  const fetchCart = async () => {
+    const token = getCookie('usercookie');
+    const userId = getCookie('userid'); // Assuming userId is stored in cookies
+    try {
+      const response = await axios.get(`http://localhost:8009/cart/${userId}`, {
+        headers: {
+          "Authorization": `Bearer ${token}`,
+        },
+      });
+      if (response.status === 200) {
+        setCart(response.data.cart.items);
+      }
+    } catch (error) {
+      console.error('Error fetching cart data:', error);
+    }
+  };
+
+  const handleAddToCart = async (fabric) => {
+    const token = getCookie('usercookie');
+    const userId = getCookie('userid');
+    if (!token) {
+      alert('You need to login first!');
+      navigate('/login');
+      return;
+    }
+    try {
+      const response = await axios.post(
+        'http://localhost:8009/cart/add',
+        {
+          userId,
+          fabricId: fabric.id,
+          quantity: 1,
+          price: fabric.price,
+          discount: fabric.discount || 0,
+        },
+        {
+          headers: { "Authorization": `Bearer ${token}` },
+        }
+      );
+      if (response.status === 200 || response.status === 201) {
+        alert(`${fabric.name} added to cart!`);
+        fetchCart(); // Refresh cart data
+      }
+    } catch (error) {
+      console.error('Error adding item to cart:', error);
+    }
+  };
+
+  const handleUpdateQuantity = async (fabric, newQuantity) => {
+    const token = getCookie('usercookie');
+    const userId = getCookie('userid');
+    try {
+      const response = await axios.patch(
+        `http://localhost:8009/cart/update/${userId}/${fabric.id}`,
+        { quantity: newQuantity },
+        {
+          headers: { "Authorization": `Bearer ${token}` },
+        }
+      );
+      if (response.status === 200) {
+        fetchCart(); // Refresh cart data
+      }
+    } catch (error) {
+      console.error('Error updating item quantity:', error);
+    }
+  };
+
+  const handleRemoveFromCart = async (fabric) => {
+    const token = getCookie('usercookie');
+    const userId = getCookie('userid');
+    try {
+      const response = await axios.delete(
+        `http://localhost:8009/cart/remove/${userId}/${fabric.id}`,
+        {
+          headers: { "Authorization": `Bearer ${token}` },
+        }
+      );
+      if (response.status === 200) {
+        fetchCart(); // Refresh cart data
+      }
+    } catch (error) {
+      console.error('Error removing item from cart:', error);
+    }
+  };
+
+  useEffect(() => {
+    const userIdFromCookie = getCookie('userid'); 
+    setUserId(userIdFromCookie);  
+  
+    fetchFabrics();
+    fetchCart();
+  }, [])
+
+  const isInCart = (fabricId) => cart.some((item) => item.fabricId._id === fabricId);
+  
+  const getQuantity = (fabricId) => {
+    const item = cart.find((item) => item.fabricId._id === fabricId);
+    return item ? item.quantity : 0;
+  };
+
   const filteredData = fabricList.filter((fabric) => {
-    // If no filters are set, return all fabrics
     const noFiltersSet = Object.values(filters).every((val) => val === '' || val === false);
-    
+
     if (noFiltersSet) {
-      return true; // Return all fabrics when no filters are set
+      return true;
     }
 
-    // Apply the filters to the fabric data
     return (
       (!filters.color || fabric.color === filters.color) &&
       (!filters.type || fabric.type === filters.type) &&
@@ -68,64 +157,110 @@ const FabricCatalog = () => {
     );
   });
 
-  // Handle Add to Cart logic
-  const handleAddToCart = (fabric) => {
-    alert(`${fabric.name} added to cart!`);
-    // Implement your cart logic here, e.g., save to localStorage or update state
-  };
-
   return (
     <div className="catalog-page">
-      {/* Sidebar */}
       <aside className="sidebar">
         <h3>Filters</h3>
         <div className="filter-group">
           <label>Color</label>
-          <select name="color" value={filters.color} onChange={handleFilterChange}>
+          <select name="color" value={filters.color} onChange={(e) => {
+            const { name, value, type, checked } = e.target;
+            setFilters((prevFilters) => ({
+              ...prevFilters,
+              [name]: type === 'checkbox' ? checked : value,
+            }));
+          }}>
             <option value="">All</option>
-            <option value="Red">Red</option>
-            <option value="Pink">Pink</option>
+            {filters.availableColors?.map((color, index) => (
+              <option key={index} value={color}>
+                {color}
+              </option>
+            ))}
           </select>
         </div>
         <div className="filter-group">
           <label>Type</label>
-          <select name="type" value={filters.type} onChange={handleFilterChange}>
+          <select name="type" value={filters.type} onChange={(e) => {
+            const { name, value, type, checked } = e.target;
+            setFilters((prevFilters) => ({
+              ...prevFilters,
+              [name]: type === 'checkbox' ? checked : value,
+            }));
+          }}>
             <option value="">All</option>
-            <option value="Linen">Linen</option>
-            <option value="Cotton">Cotton</option>
+            {filters.availableTypes?.map((type, index) => (
+              <option key={index} value={type}>
+                {type}
+              </option>
+            ))}
           </select>
         </div>
         <div className="filter-group">
           <label>Weight</label>
-          <select name="weight" value={filters.weight} onChange={handleFilterChange}>
+          <select name="weight" value={filters.weight} onChange={(e) => {
+            const { name, value, type, checked } = e.target;
+            setFilters((prevFilters) => ({
+              ...prevFilters,
+              [name]: type === 'checkbox' ? checked : value,
+            }));
+          }}>
             <option value="">All</option>
-            <option value="Lightweight">Lightweight</option>
-            <option value="Mediumweight">Mediumweight</option>
+            {filters.availableWeights?.map((weight, index) => (
+              <option key={index} value={weight}>
+                {weight}
+              </option>
+            ))}
           </select>
         </div>
         <div className="filter-group">
           <label>Fabric Content</label>
-          <select name="content" value={filters.content} onChange={handleFilterChange}>
+          <select name="content" value={filters.content} onChange={(e) => {
+            const { name, value, type, checked } = e.target;
+            setFilters((prevFilters) => ({
+              ...prevFilters,
+              [name]: type === 'checkbox' ? checked : value,
+            }));
+          }}>
             <option value="">All</option>
-            <option value="100% Linen">100% Linen</option>
-            <option value="Cotton Blend">Cotton Blend</option>
+            {filters.availableContents?.map((content, index) => (
+              <option key={index} value={content}>
+                {content}
+              </option>
+            ))}
           </select>
         </div>
         <div className="filter-group">
           <label>Width</label>
-          <select name="width" value={filters.width} onChange={handleFilterChange}>
+          <select name="width" value={filters.width} onChange={(e) => {
+            const { name, value, type, checked } = e.target;
+            setFilters((prevFilters) => ({
+              ...prevFilters,
+              [name]: type === 'checkbox' ? checked : value,
+            }));
+          }}>
             <option value="">All</option>
-            <option value="54 inches">54 inches</option>
-            <option value="44 inches">44 inches</option>
+            {filters.availableWidths?.map((width, index) => (
+              <option key={index} value={width}>
+                {width}
+              </option>
+            ))}
           </select>
         </div>
         <div className="filter-group">
           <label>Design</label>
-          <select name="design" value={filters.design} onChange={handleFilterChange}>
+          <select name="design" value={filters.design} onChange={(e) => {
+            const { name, value, type, checked } = e.target;
+            setFilters((prevFilters) => ({
+              ...prevFilters,
+              [name]: type === 'checkbox' ? checked : value,
+            }));
+          }}>
             <option value="">All</option>
-            <option value="Plain">Plain</option>
-            <option value="Floral">Floral</option>
-            <option value="Printed">Printed</option>
+            {filters.availableDesigns?.map((design, index) => (
+              <option key={index} value={design}>
+                {design}
+              </option>
+            ))}
           </select>
         </div>
         <div className="filter-group">
@@ -134,14 +269,18 @@ const FabricCatalog = () => {
               type="checkbox"
               name="onSale"
               checked={filters.onSale}
-              onChange={handleFilterChange}
+              onChange={(e) => {
+                const { name, value, type, checked } = e.target;
+                setFilters((prevFilters) => ({
+                  ...prevFilters,
+                  [name]: type === 'checkbox' ? checked : value,
+                }));
+              }}
             />
             On Sale
           </label>
         </div>
       </aside>
-
-      {/* Catalog */}
       <main className="catalog-container">
         <h2 className="catalog-title">All Fabric</h2>
         <div className="fabric-grid">
@@ -151,16 +290,32 @@ const FabricCatalog = () => {
               <div className="fabric-info">
                 <h3 className="fabric-name">{fabric.name}</h3>
                 <div className="fabric-price">
-                  <span className="discounted-price">₹{convertToINR(fabric.priceUSD)}</span>
-                  <span className="original-price">₹{convertToINR(fabric.originalPriceUSD)}</span>
-                  <span className="discount-badge">-{fabric.discount}%</span>
+                  {fabric.discount ? (
+                    <>
+                      <span className="discounted-price">
+                        ₹{fabric.price - (fabric.price * fabric.discount) / 100}
+                      </span>
+                      <span className="original-price">₹{fabric.price}</span>
+                    </>
+                  ) : (
+                    <span className="original-price">₹{fabric.price}</span>
+                  )}
                 </div>
-                <button
-                  className="add-to-cart-button"
-                  onClick={() => handleAddToCart(fabric)}
-                >
-                  Add to Cart
-                </button>
+
+                {isInCart(fabric.id) ? (
+                  <div className="quantity-controls">
+                    <button onClick={() => handleUpdateQuantity(fabric, getQuantity(fabric.id) - 1)}>-</button>
+                    <span>{getQuantity(fabric.id)}</span>
+                    <button onClick={() => handleUpdateQuantity(fabric, getQuantity(fabric.id) + 1)}>+</button>
+                  </div>
+                ) : (
+                  <button
+                    className="add-to-cart-button"
+                    onClick={() => handleAddToCart(fabric)}
+                  >
+                    Add to Cart
+                  </button>
+                )}
               </div>
             </div>
           ))}

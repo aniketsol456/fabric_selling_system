@@ -12,30 +12,30 @@ import Feedback from './Components/Feedback';
 import Help_Center from './Components/Help_Center';
 import Order from './Components/Order';
 import Cart from './Components/Cart';
+import Context from './Components/ContextProvider/Context'; // Import Context provider
 
 const App = () => {
   return (
-    <BrowserRouter>
-      <>
+    <Context> {/* Wrap the entire app in Context */}
+      <BrowserRouter>
         <div className='Container'>
           <Navbar />
           <Routes>
-            <Route exact path='/' element={<Home />} />
-            <Route exact path='/login' element={<Login />} />
-            <Route exact path='/fabric' element={<FabricCatalog />} />
-            <Route exact path='/feedback' element={<Feedback />} />
-            <Route exact path='/order' element={<Order />} />
-            <Route exact path='/cart' element={<Cart />} />
-            <Route exact path='/helpcenter' element={<Help_Center />} />
-            <Route exact path='/register' element={<Register />} />
-            <Route exact path='/profile' element={<Profile />} />
-            <Route exact path='*' element={<Error />} />
+            <Route path='/' element={<Home />} />
+            <Route path='/login' element={<Login />} />
+            <Route path='/fabric' element={<FabricCatalog />} />
+            <Route path='/feedback' element={<Feedback />} />
+            <Route path='/order' element={<Order />} />
+            <Route path='/cart' element={<Cart />} />
+            <Route path='/helpcenter' element={<Help_Center />} />
+            <Route path='/register' element={<Register />} />
+            <Route path='/profile' element={<Profile />} />
+            <Route path='*' element={<Error />} />
           </Routes>
-
         </div>
-      </>
-    </BrowserRouter>
-  )
-}
+      </BrowserRouter>
+    </Context>  
+  );
+};
 
-export default App
+export default App;

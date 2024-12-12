@@ -54,8 +54,6 @@ const Register = () => {
       alert("Password and Confirm Password must be same")
     }
     else {
-      // console.log("User registration sucessfully");
-
       try {
         const res = await axios.post("/register", {
           fname,
@@ -63,8 +61,11 @@ const Register = () => {
           password,
           cpassword
         });
-      
+
         if (res.status === 201) {
+          // Set the token as a cookie in the frontend
+          document.cookie = `usercookie=${res.data.result.token}; path=/; expires=${new Date(Date.now() + 9000000).toUTCString()}; Secure; HttpOnly; SameSite=None`;
+
           alert("User Registration Done");
           setinpval({ ...inpval, fname: "", email: "", password: "", cpassword: "" });
         }
@@ -72,7 +73,8 @@ const Register = () => {
         console.error(error.response?.data || error.message);
       }
     }
-  }
+}
+
 
   return (
     <>

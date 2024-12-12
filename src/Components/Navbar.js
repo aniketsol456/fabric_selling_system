@@ -23,16 +23,24 @@ const Navbar = () => {
     navigate('/profile');
   };
 
+  // Get cookie value by name
+  const getCookie = (name) => {
+    const cookieString = `; ${document.cookie}`;
+    const parts = cookieString.split(`; ${name}=`);
+    if (parts.length === 2) {
+      return parts.pop().split(';').shift();
+    }
+    return undefined;
+  };
+
   const handleLogout = () => {
-    // Clear the token from localStorage or cookie
-    localStorage.removeItem('usersdatatoken');
-    // Redirect to the home page or login page
+
+    document.cookie = `usercookie=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/`;
+
     navigate('/login');
   };
 
-  // Check if user is logged in by checking for the token
-  const isLoggedIn = localStorage.getItem('usersdatatoken');
-
+  const isLoggedIn = getCookie('usercookie');
   return (
     <div className='Navbar'>
       <div className='Navlogo'>
