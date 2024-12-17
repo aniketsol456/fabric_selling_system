@@ -12,7 +12,8 @@ import Feedback from './Components/Feedback';
 import Help_Center from './Components/Help_Center';
 import Order from './Components/Order';
 import Cart from './Components/Cart';
-import Context from './Components/ContextProvider/Context'; // Import Context provider
+import CheckoutForm from './Components/CheckoutForm';
+import Context from './Components/ContextProvider/Context'; 
 
 const App = () => {
   return (
@@ -27,6 +28,7 @@ const App = () => {
             <Route path='/feedback' element={<Feedback />} />
             <Route path='/order' element={<Order />} />
             <Route path='/cart' element={<Cart />} />
+            <Route path='/checkout' element={<CheckoutForm />} />
             <Route path='/helpcenter' element={<Help_Center />} />
             <Route path='/register' element={<Register />} />
             <Route path='/profile' element={<Profile />} />
