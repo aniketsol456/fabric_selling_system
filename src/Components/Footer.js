@@ -1,7 +1,19 @@
 import React from 'react';
 import './Footer.css';
+import { useNavigate } from 'react-router-dom';
 
 const Footer = () => {
+
+  const navigate = useNavigate();
+
+  const gotohelp = () => {
+    navigate('/helpcenter');
+  }
+
+  const gotoProfile = () =>{
+    navigate('/profile');
+  }
+
   return (
     <footer className="footer">
       <div className="footer-top">
@@ -15,7 +27,7 @@ const Footer = () => {
       <div className="footer-main">
         <div className="footer-section">
           <h4>Services</h4>
-          <p>Help Center</p>
+          <p  onClick={gotohelp}>Help Center</p>
         </div>
         <div className="footer-section">
           <h4>Information</h4>
@@ -27,12 +39,12 @@ const Footer = () => {
         </div>
         <div className="footer-section">
           <h4>Personalize</h4>
-          <p>Account</p>
+          <p onClick={gotoProfile}>Account</p>
         </div>
 
         <div className="footer-section">
           <h4>Help</h4>
-          <p>Contact Us</p>
+          <p onClick={gotohelp}>Contact Us</p>
           <p>M-F 10:00-5:00 Pacific Time India</p>
           <p>+91 9054214277</p>
           <div className="social-icons">
