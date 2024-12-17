@@ -1,0 +1,53 @@
+.checkoutForm {
+    margin-top: 25px;
+    width: 100%;
+    max-width: 600px;
+    align-items: center;
+    justify-self: center;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background: #f9f9f9;
+  }
+  
+  .formGroup {
+    margin-bottom: 15px;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  input,
+  select,
+  button {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+  }
+  
+  button {
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+  }
+  
+  @media (max-width: 768px) {
+    .checkoutForm {
+      padding: 15px;
+    }
+  
+    input,
+    select,
+    button {
+      padding: 6px;
+    }
+  }
+  
