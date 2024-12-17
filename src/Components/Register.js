@@ -55,7 +55,7 @@ const Register = () => {
     }
     else {
       try {
-        const res = await axios.post("/register", {
+        const res = await axios.post("http://localhost:8009/register", {
           fname,
           email,
           password,
