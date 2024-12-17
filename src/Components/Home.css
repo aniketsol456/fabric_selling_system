@@ -79,29 +79,8 @@
     background-color: #8b0000;
 }
 
-
 .fabric-collection {
     background-color: #f8f8f8;
-    text-align: center;
-    margin: 40px auto;
-    max-width: 1200px;
-    padding: 20px;
-}
-
-.collection-title {
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 10px;
-    color: #333;
-}
-
-.collection-subtitle {
-    font-size: 16px;
-    color: #555;
-    margin-bottom: 20px;
-}
-
-.fabric-collection {
     text-align: center;
     margin: 40px auto;
     max-width: 1200px;
@@ -150,20 +129,22 @@
 .fabric-collection-item:hover .collection-image {
     transform: scale(1.05);
 }
+
 .fabric-button {
     position: absolute;
     bottom: 10px;
     left: 50%;
-    margin-left: -80px;  /* Half of the button width (160px / 2) */
+    transform: translateX(-50%);
     background-color: white;
     border: 2px solid #b22222;
     color: #b22222;
-    padding: 8px 16px;
+    padding: 10px 20px; /* Updated padding for better appearance */
     font-size: 16px;
     font-weight: bold;
     border-radius: 20px;
     cursor: pointer;
     transition: background-color 0.3s, color 0.3s;
+    text-align: center;
 }
 
 .fabric-button:hover {
@@ -171,14 +152,12 @@
     color: white;
 }
 
-
 /* Benefits Section Styling */
 .benefits-section {
     display: flex;
     justify-content: space-around;
     margin: 20px 0;
     width: 100%;
-    /* max-width: 1200px; */
     background-color: #fff;
 }
 
@@ -195,7 +174,6 @@
     height: auto;
     margin-bottom: 10px;
 }
-
 
 /* Responsive Styling */
 @media (max-width: 768px) {
@@ -234,6 +212,7 @@
 
     .fabric-button {
         font-size: 14px;
+        padding: 8px 16px; /* Adjusted padding for smaller screens */
     }
 
     .benefits-section {
