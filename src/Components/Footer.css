@@ -51,6 +51,7 @@
 }
 
 .footer-section p {
+  cursor: pointer;
   margin: 8px 0;
   color: #555;
 }
