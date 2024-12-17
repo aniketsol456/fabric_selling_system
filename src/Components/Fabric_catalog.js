@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './Fabric_catalog.css';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import fabricimage from '../assets/Images/cotton5.jpg';
 
 const FabricCatalog = () => {
   const navigate = useNavigate();
@@ -41,7 +42,7 @@ const FabricCatalog = () => {
 
   const fetchCart = async () => {
     const token = getCookie('usercookie');
-    const userId = getCookie('userid'); // Assuming userId is stored in cookies
+    const userId = getCookie('userid'); 
     try {
       const response = await axios.get(`http://localhost:8009/cart/${userId}`, {
         headers: {
@@ -58,7 +59,7 @@ const FabricCatalog = () => {
 
   const handleAddToCart = async (fabric) => {
     const token = getCookie('usercookie');
-    const userId = getCookie('userid');
+    console.log(fabric);
     if (!token) {
       alert('You need to login first!');
       navigate('/login');
@@ -69,7 +70,7 @@ const FabricCatalog = () => {
         'http://localhost:8009/cart/add',
         {
           userId,
-          fabricId: fabric.id,
+          fabricId: fabric._id,
           quantity: 1,
           price: fabric.price,
           discount: fabric.discount || 0,
@@ -90,28 +91,36 @@ const FabricCatalog = () => {
   const handleUpdateQuantity = async (fabric, newQuantity) => {
     const token = getCookie('usercookie');
     const userId = getCookie('userid');
+  
+    if (newQuantity < 1) {
+      // Remove item from cart if quantity is less than 1
+      handleRemoveFromCart(fabric);
+      return;
+    }
+  
     try {
       const response = await axios.patch(
-        `http://localhost:8009/cart/update/${userId}/${fabric.id}`,
+        `http://localhost:8009/cart/update/${userId}/${fabric._id}`,
         { quantity: newQuantity },
         {
           headers: { "Authorization": `Bearer ${token}` },
         }
       );
       if (response.status === 200) {
-        fetchCart(); // Refresh cart data
+        fetchCart();
       }
     } catch (error) {
       console.error('Error updating item quantity:', error);
     }
   };
+  
 
   const handleRemoveFromCart = async (fabric) => {
     const token = getCookie('usercookie');
     const userId = getCookie('userid');
     try {
       const response = await axios.delete(
-        `http://localhost:8009/cart/remove/${userId}/${fabric.id}`,
+        `http://localhost:8009/cart/remove/${userId}/${fabric._id}`,
         {
           headers: { "Authorization": `Bearer ${token}` },
         }
@@ -285,8 +294,9 @@ const FabricCatalog = () => {
         <h2 className="catalog-title">All Fabric</h2>
         <div className="fabric-grid">
           {filteredData.map((fabric) => (
-            <div key={fabric.id} className="fabric-card">
-              <img src={fabric.image} alt={fabric.name} className="fabric-image" />
+            <div key={fabric._id} className="fabric-card">
+              {/* <img src={fabric.image} alt={fabric.name} className="fabric-image" /> */}
+              <img src={fabricimage} alt={fabric.name} className="fabric-image" />
               <div className="fabric-info">
                 <h3 className="fabric-name">{fabric.name}</h3>
                 <div className="fabric-price">
@@ -302,11 +312,11 @@ const FabricCatalog = () => {
                   )}
                 </div>
 
-                {isInCart(fabric.id) ? (
+                {isInCart(fabric._id) ? (
                   <div className="quantity-controls">
-                    <button onClick={() => handleUpdateQuantity(fabric, getQuantity(fabric.id) - 1)}>-</button>
-                    <span>{getQuantity(fabric.id)}</span>
-                    <button onClick={() => handleUpdateQuantity(fabric, getQuantity(fabric.id) + 1)}>+</button>
+                    <button onClick={() => handleUpdateQuantity(fabric, getQuantity(fabric._id) - 1)}>-</button>
+                    <span>{getQuantity(fabric._id)}</span>
+                    <button onClick={() => handleUpdateQuantity(fabric, getQuantity(fabric._id) + 1)}>+</button>
                   </div>
                 ) : (
                   <button
